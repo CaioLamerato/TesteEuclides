@@ -1,0 +1,117 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ @author Caio Vinicius de Oliveira Lamerato
+ */
+package javaapplication6;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author Caio Vinicius de Oliveira Lamerato
+ */
+public class JavaApplication6 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        Scanner entrada = new Scanner(System.in);
+        //Variaveis
+        int p, q, e, n, totn, d, c, y, r, quo, quo2, r2, r1, z = 1, x1;
+        String result, result2;
+
+        //Escolhendo primos, calcular n e totn e escolher o valor de e.
+        System.out.println("Digite o valor de P: ");
+        p = entrada.nextInt();
+        System.out.println("Digite o valor de Q: ");
+        q = entrada.nextInt();
+
+        //Calculo de n
+        n = p * q;
+
+        //Calculo de totiente
+        totn = (p - 1) * (q - 1);
+
+        //Escolher o valor de e
+        System.out.println("Digite o valor de e: ");
+        e = entrada.nextInt();
+
+        //Chave Publica
+        System.out.println("");
+        //Imprimir o valor de n
+        System.out.println("O valor de n é: " + n);
+        System.out.println("");
+        //Imprimir o valor de totn
+        System.out.println("O valor de totn é: " + totn);
+        System.out.println("");
+        //Imprimir o valor da Chave Publica
+        System.out.println("Chave Publica(n,e) - Chave Publica( " + n + " , " + e + " )");
+        System.out.println("");
+
+        /*Chave Privada
+        -Euclides Tradcional ( x : y = c + r)
+        -Euclides Estendido ( r = (1*x) - (c*y)
+         */
+        System.out.println("Calculos para descobrir a chave privada: ");
+        System.out.println("");
+
+        //1ª equação Tradicional
+        quo = e / totn;
+        r = e % totn;
+        System.out.println("1ª Equação Tradicional - " + e + " : " + totn + " = " + quo + " com resto " + r);
+        //1ª equação estendida
+        x1 = e;
+        c = quo;
+        y = totn;
+        System.out.println("1ª Equação Estendida - " + r + " = (" + z + " * " + x1 + ") - (" + c + " * " + y + " ) ");
+        System.out.println("");
+        //Chamar r = result para usar na 2ª eq
+        result = "(" + z + " * " + x1 + ") - (" + c + " * " + y + ")";
+
+        //2ª equação Tradicional
+        quo = totn / r;
+        r1 = totn % r;
+        System.out.println("2ª Equação Tradicional - " + totn + " : " + r + " = " + quo + " com resto " + r1);
+        //2º equação Estendida        
+        System.out.println("2ª Equação Estendida - " + r1 + " = (" + z + " * " + totn + ") - (" + quo + " * " + r + " ) ");
+        //2º passo para 2º equação - Subistituir result da 1ª eq Estendida na 2ª eq estendida
+        System.out.println("2ª Equação Estendida - " + r1 + " = (" + z + " * " + totn + ") - (" + quo + " * (" + result + ")");
+        /*3º passo para 2º equação - Realizar a multiplicação em result(quo*(result)) sem operar x,y. sendo que em result:
+        x =  x1
+        y = y    */
+        result = "(" + quo * z + " * " + x1 + ") - (" + quo * c + " * " + y + ")";
+        System.out.println("2ª Equação Estendida - " + r1 + " = (" + z + " * " + totn + ") - (" + result + ")");
+        //4º passo para 2º equação - Somar os multiplos comuns
+        result = "(" + (z + (-(quo * c))) + " * " + totn + ") - (" + quo * z + " * " + x1 + ")";
+        System.out.println("2ª Equação Estendida - " + r1 + " = (" + result + ")");
+        //Chamar r1 de result2 para usar na 3ª eq
+        result2 = "" + result + "";
+        System.out.println("");
+
+        //3ª Equação tradicional
+        quo2 = r / r1;
+        r2 = r % r1;
+        System.out.println("3ª Equação Tradicional - " + r + " : " + r1 + " = " + quo2 + " com resto " + r2);
+        //3ª Equação Estendida
+        System.out.println("3ª Equação Estendida - " + r2 + " = (" + z + " * " + r + ") - (" + quo2 + " * " + r1 + ")");
+        //2º passo para 3ª equação Estendida - Subistituir result2 da 2ª eq Estendida na 3ª eq Estendida
+        System.out.println("3ª Equação Estendida - " + r2 + " = (" + z + " * " + r + ") - (" + quo2 + " * (" + result2 + ")");
+        /*3º passo para 3ª equação Estendida - Realizar a multiplicação (quo2*(result2)) sem operar x,y; sendo que em result2:
+        x = totn
+        y = x1    */
+        System.out.println("3ª Equação Estendida - " + r2 + " = (" + z + " * " + r + ") - ((" + quo2 * (z + (-(quo * c))) + " * " + totn + ") - (" + quo2 * (quo * z) + " * " + x1 + "))");
+        //4º passo para 3ª equação Estendida - Somar os multiplos comuns
+        System.out.println("3ª Equação Estendida - " + r2 + " = (" + (z + (quo2 * (quo * z))) + " * " + r + " - (" + quo2 * (z + (-(quo * c))) + " * " + totn + ")");
+        System.out.println("");
+        //Imprimir o valor de d
+        System.out.println("O valor de d é: " + (z + (quo2 * (quo * z))));
+        System.out.println("");
+        //Imprimir o valor da Chave Privada
+        System.out.println("Chave privada(n,d) - Chave privada(" + n + "," + (z + (quo2 * (quo * z))) + ")");
+
+    }
+
+}
